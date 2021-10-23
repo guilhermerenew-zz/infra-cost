@@ -3,8 +3,6 @@ provider "aws" {
   region                      = "ap-northeast-1"
   skip_credentials_validation = true
   skip_requesting_account_id  = true
-  access_key                  = "mock_access_key"
-  secret_key                  = "mock_secret_key"
 }
 
 # Setting up VPC
@@ -209,7 +207,7 @@ resource "aws_instance" "webserver2" {
 resource "aws_instance" "grafana" {
   security_groups             = [aws_security_group.mw_sg.id]
   ami                         = "ami-07dd14faa8a17fb3e"
-  instance_type               = "c5d.metal"
+  instance_type               = "t2.nano"
   key_name                    = "terraform-aws"
   subnet_id                   = aws_subnet.mw_subnet3.id
   private_ip                  = "10.0.3.30"
