@@ -293,13 +293,7 @@ resource "aws_db_instance" "wikidatabase-replica" {
   availability_zone       = "ap-northeast-1d"
   engine                  = "mysql"
   engine_version          = "5.7"
-<<<<<<< HEAD
   instance_class          = "db.t2.micro"	
-=======
-  instance_class          = "db.t2.micro"
-  allocated_storage       = 2
-  max_allocated_storage   = 10
->>>>>>> parent of 29c19bf... adjusting on principal
   storage_type            = "gp2"
   username                = "wiki"
   password                = "wik987%$"
