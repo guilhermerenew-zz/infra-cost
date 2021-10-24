@@ -9,7 +9,6 @@ jobs:
     runs-on: ubuntu-latest
     name: Show infracost diff
     steps:
-    - name: Infracost
     - name: Check out repository
       uses: actions/checkout@v2      
     - name: Infracost
