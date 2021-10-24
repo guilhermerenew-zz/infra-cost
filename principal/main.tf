@@ -1,6 +1,6 @@
 # Cloud Provider Access
 provider "aws" {
-  region                      = "ap-northeast-1"
+  region                      = "eu-west-3"
   skip_credentials_validation = true
   skip_requesting_account_id  = true
 }
