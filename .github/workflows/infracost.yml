@@ -28,3 +28,4 @@ jobs:
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       with:
         path: principal
+        usage_file: infracost-usage.yml
