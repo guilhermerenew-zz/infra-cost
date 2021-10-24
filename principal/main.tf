@@ -61,26 +61,6 @@ resource "aws_subnet" "mw_subnet1" {
   }
 }
 
-# subnet2 - ap-northeast-1b
-resource "aws_subnet" "mw_subnet2" {
-  vpc_id            = aws_vpc.mw_vpc.id
-  cidr_block        = "10.0.2.0/24"
-  availability_zone = "ap-northeast-1c"
-  tags = {
-    Name = "MediaWikiSubnet2"
-  }
-}
-
-# Subnet3 - ap-northeast-1c
-resource "aws_subnet" "mw_subnet3" {
-  vpc_id            = aws_vpc.mw_vpc.id
-  cidr_block        = "10.0.3.0/24"
-  availability_zone = "ap-northeast-1d"
-  tags = {
-    Name = "MediaWikiSubnet3"
-  }
-}
-
 #Creation Security Group mw_sg
 resource "aws_security_group" "mw_sg" {
   name        = "mw_sg"
@@ -112,38 +92,16 @@ resource "aws_security_group" "mw_sg" {
     to_port     = 3306
     protocol    = "TCP"
     cidr_blocks = ["0.0.0.0/0"]
-  }
 
-# ingress port 3000 for grafana Connection
-  ingress {
-    from_port   = 3000
-    to_port     = 3000
-    protocol    = "TCP"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-# ingress port 5000 for Connection api-rest (docker app)
-  ingress {
-    from_port   = 5000
-    to_port     = 5000
-    protocol    = "TCP"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-# ICMP ingress
-  ingress {
-    from_port   = "0"
-    to_port     = "0"
-    protocol    = "icmp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-# egress for All Connections
-  egress {
-    from_port   = "0"
-    to_port     = "0"
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
+  egress = [
+      {
+      from_port        = 0
+      to_port          = 0
+      protocol         = "-1"
+      cidr_blocks      = ["0.0.0.0/0"]
+      ipv6_cidr_blocks = ["::/0"]
+      }
+    ]
   }
 }
 
@@ -200,22 +158,6 @@ resource "aws_instance" "webserver2" {
     Name  = "mediawiki-web2"
     group = "web"
     app   = "Application"
-  }
-}
-
-# Grafana Instance (Monitoring)
-resource "aws_instance" "grafana" {
-  security_groups             = [aws_security_group.mw_sg.id]
-  ami                         = "ami-07dd14faa8a17fb3e"
-  instance_type               = "c5d.metal"
-  key_name                    = "terraform-aws"
-  subnet_id                   = aws_subnet.mw_subnet3.id
-  private_ip                  = "10.0.3.30"
-  associate_public_ip_address = true
-  tags = {
-    Name  = "mediawiki-grafana"
-    group = "web"
-    app   = "Monitoring"
   }
 }
 
@@ -285,35 +227,6 @@ resource "aws_db_instance" "wikidatabase" {
   }
 }
 
-# Creating Replica RDS in ap-northeast-1d
-resource "aws_db_instance" "wikidatabase-replica" {
-  identifier              = "wikidatabase-replica"
-  replicate_source_db     = aws_db_instance.wikidatabase.id
-  allocated_storage       = 5
-  max_allocated_storage   = 10
-  availability_zone       = "ap-northeast-1d"
-  engine                  = "mysql"
-  engine_version          = "5.7"
-  instance_class          = "db.t2.micro"	
-  storage_type            = "gp2"
-  username                = "wiki"
-  password                = "wik987%$"
-  port                    = 3306
-  parameter_group_name    = "default.mysql5.7"
-  maintenance_window      = "Mon:06:00-Mon:09:00"
-  backup_window           = "09:01-11:00"
-  backup_retention_period = 0
-  skip_final_snapshot     = true
-  publicly_accessible     = true
-  copy_tags_to_snapshot   = true
-  multi_az                = false
-  apply_immediately       = true
-  tags = {
-    name        = "wikidatabase-replica"
-    application = "production"
-  }
-}
-
 # Create zone!
 resource "aws_route53_zone" "area-zone" {
   name = "applicationdesktop.cf"
@@ -326,15 +239,6 @@ resource "aws_route53_record" "database-record" {
   type    = "CNAME"
   ttl     = 30
   records = ["${aws_db_instance.wikidatabase.address}"]
-}
-
-#Function Lambda test!
-resource "aws_lambda_function" "hello_world-gui" {
-  function_name = "hello_world-gui"
-  role          = "arn:aws:lambda:us-east-1:account-id:resource-id"
-  handler       = "exports.test"
-  runtime       = "nodejs12.x"
-  memory_size   = 512
 }
 
 # ElasticLoadBalancer Addres for Connections
