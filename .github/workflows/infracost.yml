@@ -11,14 +11,13 @@ jobs:
     steps:
     - name: Check out repository
       uses: actions/checkout@v2
-    - name: Infracost
-      uses: infracost/infracost-gh-action@v0.4.3
+    - name: Run infracost diff
+      uses: infracost/infracost-gh-action@master
       env:
         INFRACOST_API_KEY: ${{ secrets.INFRACOST_API_KEY }}
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       with:
-        entrypoint: /scripts/ci/diff.sh 
-        terraform_dir: principal
+        path: principal
         usage_file: infracost-usage.yml
