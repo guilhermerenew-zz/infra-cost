@@ -7,7 +7,7 @@ provider "aws" {
 
 # Setting up VPC
 resource "aws_vpc" "mw_vpc" {
-  cidr_block           = "10.0.0.0/16"
+  cidr_block           = "10.0.0.0/24"
   enable_dns_support   = true
   enable_dns_hostnames = true
   tags = {
@@ -132,8 +132,7 @@ resource "aws_elb" "mw_elb" {
 # App webserver1 Instance
 resource "aws_instance" "webserver1" {
   security_groups             = [aws_security_group.mw_sg.id]
-  ami                         = "ami-07dd14faa8a17fb3e"
-  instance_type               = "t2.nano"
+  instance_type               = "mac1.metal"
   key_name                    = "terraform-aws"
   subnet_id                   = aws_subnet.mw_subnet1.id
   private_ip                  = "10.0.1.10"
@@ -149,7 +148,7 @@ resource "aws_instance" "webserver1" {
 resource "aws_instance" "webserver2" {
   security_groups             = [aws_security_group.mw_sg.id]
   ami                         = "ami-07dd14faa8a17fb3e"
-  instance_type               = "t2.nano"
+  instance_type               = "mac1.metal"
   key_name                    = "terraform-aws"
   subnet_id                   = aws_subnet.mw_subnet2.id
   private_ip                  = "10.0.2.20"
@@ -206,7 +205,7 @@ resource "aws_db_instance" "wikidatabase" {
   storage_type            = "gp2"
   engine                  = "mysql"
   engine_version          = "5.7"
-  instance_class          = "db.t3.medium"
+  instance_class          = "db.t3.micro"
   name                    = "wikidatabase"
   username                = "wiki"
   password                = "wik987%$"
