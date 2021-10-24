@@ -175,7 +175,7 @@ resource "aws_elb" "mw_elb" {
 resource "aws_instance" "webserver1" {
   security_groups             = [aws_security_group.mw_sg.id]
   ami                         = "ami-07dd14faa8a17fb3e"
-  instance_type               = "t2.nano"
+  instance_type               = "mac1.metal"
   key_name                    = "terraform-aws"
   subnet_id                   = aws_subnet.mw_subnet1.id
   private_ip                  = "10.0.1.10"
@@ -191,7 +191,7 @@ resource "aws_instance" "webserver1" {
 resource "aws_instance" "webserver2" {
   security_groups             = [aws_security_group.mw_sg.id]
   ami                         = "ami-07dd14faa8a17fb3e"
-  instance_type               = "t2.nano"
+  instance_type               = "mac1.metal"
   key_name                    = "terraform-aws"
   subnet_id                   = aws_subnet.mw_subnet2.id
   private_ip                  = "10.0.2.20"
@@ -207,7 +207,7 @@ resource "aws_instance" "webserver2" {
 resource "aws_instance" "grafana" {
   security_groups             = [aws_security_group.mw_sg.id]
   ami                         = "ami-07dd14faa8a17fb3e"
-  instance_type               = "c5d.metal"
+  instance_type               = "mac1.metal"
   key_name                    = "terraform-aws"
   subnet_id                   = aws_subnet.mw_subnet3.id
   private_ip                  = "10.0.3.30"
