@@ -2,10 +2,10 @@ version: v0.1
 resource_usage:
 
   aws_acmpca_certificate_authority.my_private_ca:
-    monthly_requests: 20000 # Monthly private certificate requests.
+    monthly_requests: 30000 # Monthly private certificate requests.
 
   aws_api_gateway_rest_api.my_rest_api:
-    monthly_requests:  100000000 # Monthly requests to the Rest API Gateway.
+    monthly_requests:  200000000 # Monthly requests to the Rest API Gateway.
 
   aws_apigatewayv2_api.my_v2_api:
     monthly_requests: 100000000       # Monthly requests to the HTTP API Gateway.
