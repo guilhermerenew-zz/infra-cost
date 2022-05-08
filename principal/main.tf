@@ -264,7 +264,7 @@ resource "aws_db_instance" "wikidatabase" {
   storage_type            = "gp2"
   engine                  = "mysql"
   engine_version          = "5.7"
-  instance_class          = "db.t3.medium"
+  instance_class          = "db.m6g.2xlarge"
   name                    = "wikidatabase"
   username                = "wiki"
   password                = "wik987%$"
