@@ -1,5 +1,7 @@
 provider "google" {
- region      = "us-central1"
+  project     = "stack-project-349919"
+  region      = "us-central1"
+  zone        = "us-central1-c"
 }
 
 resource "google_compute_instance" "instance1" {
