@@ -49,8 +49,8 @@ jobs:
         working-directory: ${{ env.working-directory }}
         # Env vars can be set using the usual GitHub Actions syntax
         # See the list of supported Infracost env vars here: https://www.infracost.io/docs/integrations/environment_variables/
-        env:
-          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+        # env:
+        #   MY_ENV: ${{ secrets.MY_ENV }}
 
       # See https://www.infracost.io/docs/features/cli_commands/#comment-on-pull-requests for other options.
       - name: Post Infracost comment
