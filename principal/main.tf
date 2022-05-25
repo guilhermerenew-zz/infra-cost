@@ -21,7 +21,7 @@ resource "google_compute_instance" "instance1" {
 
   guest_accelerator {
     type = "nvidia-tesla-v100" # <<<<< Try changing this to nvidia-tesla-p4 to compare the costs
-    count = 2
+    count = 10
   }
 
   network_interface {
