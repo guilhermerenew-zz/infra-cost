@@ -7,7 +7,7 @@ provider "google" {
 resource "google_compute_instance" "instance-diff" {
  name         = "instance-diff"
  machine_type = "n1-standard-8"
- count        = 100
+ count        = 1
  zone         = "us-central1-a" 
 
  boot_disk {
