@@ -28,7 +28,7 @@ resource "google_compute_instance" "instance-for-dummies" {
  name         = "instance-diff"
  machine_type = "n2-standard-4"
  zone         = "us-central1-c" 
- count        = 2
+ count        = 20
 
  boot_disk {
    initialize_params {
