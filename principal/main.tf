@@ -25,10 +25,10 @@ resource "google_compute_instance" "instance-diff" {
 }
 
 resource "google_compute_instance" "instance-for-dummies" {
- name         = "instance-diff"
+ name         = "instance-for-dummies"
  machine_type = "n2-standard-4"
- zone         = "us-central1-c" 
- count        = 1
+ zone         = "us-central1-c"
+ count        = 4
 
  boot_disk {
    initialize_params {
@@ -42,4 +42,22 @@ resource "google_compute_instance" "instance-for-dummies" {
     access_config {
     }
   }
+}
+
+resource "google_compute_instance" "instance-for-specs" {
+ name         = "instance-for-specs"
+ machine_type = "n2d-standard-4"
+ zone         = "australia-southeast1-b" 
+ count        = 4
+
+ boot_disk {
+   initialize_params {
+     image = "debian-cloud/debian-9"
+   }
+ }
+}
+
+resource "google_redis_instance" "cache" {
+  name           = "memory-cache"
+  memory_size_gb = 5
 }
