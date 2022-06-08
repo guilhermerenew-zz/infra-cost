@@ -8,7 +8,7 @@ resource "google_compute_instance" "instance-diff" {
  name         = "instance-diff"
  machine_type = "n1-standard-8"
  zone         = "us-central1-a" 
- count        = 10
+ count        = 0
 
  boot_disk {
    initialize_params {
@@ -28,7 +28,7 @@ resource "google_compute_instance" "instance-for-dummies" {
  name         = "instance-diff"
  machine_type = "n2-standard-4"
  zone         = "us-central1-c" 
- count        = 10
+ count        = 0
 
  boot_disk {
    initialize_params {
